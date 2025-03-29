@@ -1,13 +1,11 @@
-import java.util.Scanner;
-
-import javax.swing.JFrame;
+import java.util.Scanner;;
 
 public class BankkontoSystem {
     Scanner scanner = new Scanner(System.in);
     int zahl;
     double betrag;
 
-    BankkontoSystem() {
+    public BankkontoSystem() {
         Konto konto = new Konto("999999", "Silas Luedtke", 100.0);
         while (true) { 
             System.out.println("Wähle eine Option");
@@ -40,10 +38,10 @@ public class BankkontoSystem {
         }
     }
 
-    class Konto {
+    public class Konto {
         private String kontonummer;
         private String kontoinhaber;
-        private double kontostand;
+        private double kontostand = 100.0;
     
         //konstruktor
         public Konto(String kontonummer, String kontoinhaber, double startKontostand) {

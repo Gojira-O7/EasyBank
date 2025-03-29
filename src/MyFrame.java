@@ -31,14 +31,15 @@ public class MyFrame extends JFrame implements ActionListener{
     MyFrame() {
         //text field layout
         curBalanceTxt = new JTextField();
-        curBalanceTxt.setBounds(280, 60, 241, 30);
-        curBalanceTxt.setFont(new Font("Arial", Font.BOLD, 20));
+        curBalanceTxt.setBounds(370, 60, 150, 35);
+        curBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
         curBalanceTxt.setEditable(false);
         curBalanceTxt.setFocusable(false);
+        
 
         withdrwBalanceTxt = new JTextField();
-        withdrwBalanceTxt.setBounds(280, 110, 241, 30);
-        withdrwBalanceTxt.setFont(new Font("Arial", Font.BOLD, 20));
+        withdrwBalanceTxt.setBounds(370, 110, 150, 35);
+        withdrwBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
         withdrwBalanceTxt.setEditable(false);
         withdrwBalanceTxt.setFocusable(false);
 
@@ -46,7 +47,7 @@ public class MyFrame extends JFrame implements ActionListener{
         //buttons layout
         receiptButton = new JButton("Receipt");
         receiptButton.setBounds(370, 190, 150, 40);
-        receiptButton.setFont(new Font("Arial", Font.BOLD, 20));
+        receiptButton.setFont(new Font("Arial", Font.BOLD, 28));
         receiptButton.addActionListener(this);
         receiptButton.setFocusable(false);
         receiptButton.setBackground(new Color (189, 194, 228));
@@ -54,7 +55,7 @@ public class MyFrame extends JFrame implements ActionListener{
 
         backButton = new JButton("Back");
         backButton.setBounds(370, 270, 150, 40);
-        backButton.setFont(new Font("Arial", Font.BOLD, 20));
+        backButton.setFont(new Font("Arial", Font.BOLD, 28));
         backButton.addActionListener(this);
         backButton.setFocusable(false);
         backButton.setBackground(new Color (189, 194, 228));
@@ -116,7 +117,7 @@ public class MyFrame extends JFrame implements ActionListener{
         calc.add(okButton);
         
 
-        //background layout
+        //background layouß
         backPanel = new JPanel();
         backPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         backPanel.setBounds(0, 0, 582, 740);
@@ -127,11 +128,11 @@ public class MyFrame extends JFrame implements ActionListener{
         screenPanelIn.setBackground(new Color(119, 124, 158));
         screenPanelIn.setBounds(40, 30, 500, 310);
         JLabel curBalanceLabel = new JLabel("Current Balance:");
-        curBalanceLabel.setBounds(20, 29, 200, 30);
-        curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 20)); 
+        curBalanceLabel.setBounds(20, 29, 400, 30);
+        curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
         JLabel withdrwBalanceLabel = new JLabel("Withdrawal Balance: ");
-        withdrwBalanceLabel.setBounds(20, 81, 200, 30); 
-        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 20)); 
+        withdrwBalanceLabel.setBounds(20, 81, 400, 30); 
+        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
         screenPanelIn.setLayout(null); 
         screenPanelIn.add(curBalanceLabel);
         screenPanelIn.add(withdrwBalanceLabel);
@@ -198,9 +199,25 @@ public class MyFrame extends JFrame implements ActionListener{
         if (e.getSource() == receiptButton) {
             System.out.println("Receipt button clicked!");
         }
-
         if (e.getSource() == backButton) {
             System.out.println("Back button clicked!");
+        }
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == numberButtons[i]) {
+                withdrwBalanceTxt.setText(withdrwBalanceTxt.getText().concat(String.valueOf(i)));
+            }   
+        }
+        if (e.getSource() == clearButton) {
+            withdrwBalanceTxt.setText("");
+        }
+        if (e.getSource() == cancelButton) {
+            withdrwBalanceTxt.setText("");
+        }
+        if (e.getSource() == receiptButton) {
+            System.out.println("Beleg gedruckt für");
+        }
+        if (e.getSource() == OOButton) {
+            withdrwBalanceTxt.setText(withdrwBalanceTxt.getText().concat("00"));
         }
     }
 }
