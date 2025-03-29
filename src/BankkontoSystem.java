@@ -11,7 +11,8 @@ public class BankkontoSystem {
         Konto konto = new Konto("999999", "Silas Luedtke", 100.0);
         while (true) { 
             System.out.println("Wähle eine Option");
-            System.out.print("[1] Auszahlen, [2] Einzahlen, [3] Kontostand Anzeigen, [4] Beenden ");
+            System.out.println("[1] Auszahlen, [2] Einzahlen, [3] Kontostand Anzeigen, [4] Beenden ");
+            System.out.println(" ");
             zahl = scanner.nextInt();
             
             switch (zahl) {
