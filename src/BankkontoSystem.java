@@ -1,10 +1,12 @@
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 public class BankkontoSystem {
     Scanner scanner = new Scanner(System.in);
     int zahl;
     double betrag;
-    
+
     BankkontoSystem() {
         Konto konto = new Konto("999999", "Silas Luedtke", 100.0);
         while (true) { 
@@ -28,7 +30,6 @@ public class BankkontoSystem {
                     System.out.print("Kontostand: " + konto.getKontostand());
                     break;
                 case 4:
-                    // Beendet das Programm
                     break;
                 default:
                     System.out.println("Error! Bitte verwenden 1, 2, 3 oder 4 als Eingabe.");
