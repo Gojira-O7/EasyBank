@@ -1,14 +1,8 @@
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
+
 
 public class MyFrame extends JFrame implements ActionListener{
     JPanel screenPanelIn; //inner panel
@@ -18,6 +12,7 @@ public class MyFrame extends JFrame implements ActionListener{
     JPanel calcPanelOut;
     JPanel calcBorderedPanel;
     JPanel backPanel; //background panel
+    
 
     JTextField curBalanceTxt;
     JTextField withdrwBalanceTxt;
@@ -29,6 +24,21 @@ public class MyFrame extends JFrame implements ActionListener{
     JButton enterButton, cancelButton, clearButton, dotButton, OOButton, okButton; 
 
     MyFrame() {
+        setupBankUi();
+
+    }
+
+    public void setupBankUi() {
+
+        JLabel label1 = new JLabel();
+        label1.setOpaque(true);
+        label1.setBackground(Color.RED);
+        label1.setBounds(40, 33, 500, 310);
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, 560, 410);
+        layeredPane.add(label1, JLayeredPane.DEFAULT_LAYER);
+
+
         //text field layout
         curBalanceTxt = new JTextField();
         curBalanceTxt.setBounds(370, 60, 150, 35);
@@ -126,7 +136,7 @@ public class MyFrame extends JFrame implements ActionListener{
         //screen layout
         screenPanelIn = new JPanel();
         screenPanelIn.setBackground(new Color(119, 124, 158));
-        screenPanelIn.setBounds(40, 30, 500, 310);
+        screenPanelIn.setBounds(40, 33, 500, 310);
         JLabel curBalanceLabel = new JLabel("Current Balance:");
         curBalanceLabel.setBounds(20, 29, 400, 30);
         curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
@@ -167,7 +177,8 @@ public class MyFrame extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null); 
         this.setAlwaysOnTop(true);
         this.setLayout(null);
-        this.setVisible(true);
+
+        this.add(layeredPane);
 
         //caclulator panel
         this.add(calc);
@@ -192,6 +203,8 @@ public class MyFrame extends JFrame implements ActionListener{
         
         //background layout
         this.add(backPanel);
+
+        this.setVisible(true);
     }
 
     @Override
