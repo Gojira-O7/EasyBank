@@ -12,31 +12,33 @@ public class MyFrame extends JFrame implements ActionListener{
     JPanel calcPanelOut;
     JPanel calcBorderedPanel;
     JPanel backPanel; //background panel
+
+    //JTextField pinFieldTxt;
+    JTextField curBalanceTxt;
+    JTextField eingabeBalanceTxt;
     
 
-    JTextField curBalanceTxt;
-    JTextField withdrwBalanceTxt;
-
-    JButton receiptButton;
-    JButton backButton;
+    JButton einzahlenButton;
+    JButton auszahlenButton;
+    JButton beendenButton;
     JButton[] numberButtons = new JButton[10];
     JButton[] functionButtons = new JButton[6];
     JButton enterButton, cancelButton, clearButton, dotButton, OOButton, okButton; 
 
+    boolean dotButtonUsed = false; //to check if dot button is used
     MyFrame() {
-        setupBankUi();
-
-    }
-
-    public void setupBankUi() {
-
-        JLabel label1 = new JLabel();
-        label1.setOpaque(true);
-        label1.setBackground(Color.RED);
-        label1.setBounds(40, 33, 500, 310);
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0, 0, 560, 410);
-        layeredPane.add(label1, JLayeredPane.DEFAULT_LAYER);
+        //PIN layout
+        // JLabel label1 = new JLabel();
+        // label1.setOpaque(true);
+        // label1.setBackground(Color.RED);
+        // label1.setBounds(40, 33, 500, 310);
+        // JLayeredPane layeredPane = new JLayeredPane();
+        // layeredPane.setBounds(0, 0, 560, 410);
+        // layeredPane.add(label1, JLayeredPane.DEFAULT_LAYER);
+        
+        // pinFieldTxt = new JTextField();
+        // pinFieldTxt.setBounds(30, 300, 150, 35);
+        // pinFieldTxt.setFont(new Font("Arial", Font.BOLD, 28));
 
 
         //text field layout
@@ -47,29 +49,37 @@ public class MyFrame extends JFrame implements ActionListener{
         curBalanceTxt.setFocusable(false);
         
 
-        withdrwBalanceTxt = new JTextField();
-        withdrwBalanceTxt.setBounds(370, 110, 150, 35);
-        withdrwBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
-        withdrwBalanceTxt.setEditable(false);
-        withdrwBalanceTxt.setFocusable(false);
+        eingabeBalanceTxt = new JTextField();
+        eingabeBalanceTxt.setBounds(370, 110, 150, 35);
+        eingabeBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
+        eingabeBalanceTxt.setEditable(false);
+        eingabeBalanceTxt.setFocusable(false);
 
 
         //buttons layout
-        receiptButton = new JButton("Receipt");
-        receiptButton.setBounds(370, 190, 150, 40);
-        receiptButton.setFont(new Font("Arial", Font.BOLD, 28));
-        receiptButton.addActionListener(this);
-        receiptButton.setFocusable(false);
-        receiptButton.setBackground(new Color (189, 194, 228));
-        receiptButton.setBorder(BorderFactory.createEtchedBorder());
+        einzahlenButton = new JButton("Einzahlen");
+        einzahlenButton.setBounds(54, 270, 150, 40);
+        einzahlenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        einzahlenButton.addActionListener(this);
+        einzahlenButton.setFocusable(false);
+        einzahlenButton.setBackground(new Color (189, 194, 228));
+        einzahlenButton.setBorder(BorderFactory.createEtchedBorder());
 
-        backButton = new JButton("Back");
-        backButton.setBounds(370, 270, 150, 40);
-        backButton.setFont(new Font("Arial", Font.BOLD, 28));
-        backButton.addActionListener(this);
-        backButton.setFocusable(false);
-        backButton.setBackground(new Color (189, 194, 228));
-        backButton.setBorder(BorderFactory.createEtchedBorder());
+        auszahlenButton = new JButton("Auszahlen");
+        auszahlenButton.setBounds(214, 270, 150, 40);
+        auszahlenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        auszahlenButton.addActionListener(this);
+        auszahlenButton.setFocusable(false);
+        auszahlenButton.setBackground(new Color (189, 194, 228));
+        auszahlenButton.setBorder(BorderFactory.createEtchedBorder());
+
+        beendenButton = new JButton("Beenden");
+        beendenButton.setBounds(374, 270, 150, 40);
+        beendenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        beendenButton.addActionListener(this);
+        beendenButton.setFocusable(false);
+        beendenButton.setBackground(new Color (189, 194, 228));
+        beendenButton.setBorder(BorderFactory.createEtchedBorder());
 
         //calculator buttons layout
         enterButton = new JButton("Enter");
@@ -89,14 +99,15 @@ public class MyFrame extends JFrame implements ActionListener{
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(new Font("Arial", Font.BOLD, 28));
             functionButtons[i].setFocusable(false);
-            functionButtons[i].setBorder(BorderFactory.createEtchedBorder());
-            functionButtons[0].setBackground(new Color(0, 215, 70));
-            functionButtons[1].setBackground(new Color(225, 0, 70));
-            functionButtons[2].setBackground(new Color(215, 215, 70));
-            functionButtons[3].setBackground(new Color(150, 150,150));
-            functionButtons[4].setBackground(new Color(150, 150,150));
-            functionButtons[5].setBackground(new Color(189, 194, 228)); 
+            functionButtons[i].setBorder(BorderFactory.createEtchedBorder()); 
         } 
+        functionButtons[0].setBackground(new Color(0, 215, 70));
+        functionButtons[1].setBackground(new Color(225, 0, 70));
+        functionButtons[2].setBackground(new Color(215, 215, 70));
+        functionButtons[3].setBackground(new Color(150, 150,150));
+        functionButtons[4].setBackground(new Color(150, 150,150));
+        functionButtons[5].setBackground(new Color(189, 194, 228));
+
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new JButton(String.valueOf(i));
             numberButtons[i].addActionListener(this);
@@ -137,12 +148,13 @@ public class MyFrame extends JFrame implements ActionListener{
         screenPanelIn = new JPanel();
         screenPanelIn.setBackground(new Color(119, 124, 158));
         screenPanelIn.setBounds(40, 33, 500, 310);
-        JLabel curBalanceLabel = new JLabel("Current Balance:");
+        JLabel curBalanceLabel = new JLabel("Kontostand:");
         curBalanceLabel.setBounds(20, 29, 400, 30);
-        curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
-        JLabel withdrwBalanceLabel = new JLabel("Withdrawal Balance: ");
+        curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
+
+        JLabel withdrwBalanceLabel = new JLabel("Eingabe:");
         withdrwBalanceLabel.setBounds(20, 81, 400, 30); 
-        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 28)); 
+        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25)); 
         screenPanelIn.setLayout(null); 
         screenPanelIn.add(curBalanceLabel);
         screenPanelIn.add(withdrwBalanceLabel);
@@ -178,18 +190,20 @@ public class MyFrame extends JFrame implements ActionListener{
         this.setAlwaysOnTop(true);
         this.setLayout(null);
 
-        this.add(layeredPane);
+        // this.add(layeredPane);
+        // this.add(pinFieldTxt);
 
         //caclulator panel
         this.add(calc);
 
         //text field layout
         this.add(curBalanceTxt);
-        this.add(withdrwBalanceTxt);
+        this.add(eingabeBalanceTxt);
 
         //screen button layout
-        this.add(receiptButton);
-        this.add(backButton);
+        this.add(einzahlenButton);
+        this.add(auszahlenButton);
+        this.add(beendenButton);
 
         //screen layout
         this.add(screenPanelIn);
@@ -209,28 +223,51 @@ public class MyFrame extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == receiptButton) {
-            System.out.println("Receipt button clicked!");
+        if (e.getSource() == einzahlenButton) {
+            System.out.println("Einzahlen gedruckt");
         }
-        if (e.getSource() == backButton) {
-            System.out.println("Back button clicked!");
+
+        if (e.getSource() == auszahlenButton) {
+            System.out.println("Auszahlen button gedruckt");
         }
+
+        if (e.getSource() == beendenButton) {
+            System.exit(0);
+        }
+
+        String eingabe = eingabeBalanceTxt.getText();
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == numberButtons[i]) {
-                withdrwBalanceTxt.setText(withdrwBalanceTxt.getText().concat(String.valueOf(i)));
-            }   
+             if (eingabe.contains(".")) {
+                if (eingabe.substring(eingabe.indexOf(".")).length() < 3) {
+                    eingabeBalanceTxt.setText(eingabe + i);
+                    }
+                } else {
+                    eingabeBalanceTxt.setText(eingabe + i);
+                } 
+            }
         }
-        if (e.getSource() == clearButton) {
-            withdrwBalanceTxt.setText("");
-        }
+
         if (e.getSource() == cancelButton) {
-            withdrwBalanceTxt.setText("");
+            eingabeBalanceTxt.setText("");
         }
-        if (e.getSource() == receiptButton) {
-            System.out.println("Beleg gedruckt für");
+
+        if (e.getSource() == clearButton) {
+            eingabeBalanceTxt.setText("");
+            dotButtonUsed = false;
         }
+
+        if (e.getSource() == dotButton) {
+            if (dotButtonUsed == false) {
+                eingabeBalanceTxt.setText(eingabeBalanceTxt.getText().concat("."));
+                dotButtonUsed = true;
+            }
+        }
+
         if (e.getSource() == OOButton) {
-            withdrwBalanceTxt.setText(withdrwBalanceTxt.getText().concat("00"));
+            if (dotButtonUsed == false) {
+                eingabeBalanceTxt.setText(eingabeBalanceTxt.getText().concat("00"));
+            } 
         }
     }
 }
