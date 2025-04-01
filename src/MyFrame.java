@@ -171,7 +171,7 @@ public class MyFrame extends JFrame implements ActionListener{
         //calculator layout
         calcPanelIn = new JPanel();
         calcPanelIn.setBackground(new Color(119, 124, 158));
-        calcPanelIn.setBounds(screenPanelIn.getX(), screenPanelIn.getY() + screenPanelIn.getHeight() + 50, 500, 310);
+        calcPanelIn.setBounds(screenPanelIn.getX(), screenPanelIn.getY() + screenPanelIn.getHeight() + 50, 500, 300);
         
         calcPanelOut = new JPanel();
         calcPanelOut.setBackground(new Color(238, 238, 238));
@@ -228,7 +228,7 @@ public class MyFrame extends JFrame implements ActionListener{
         }
 
         if (e.getSource() == auszahlenButton) {
-            System.out.println("Auszahlen button gedruckt");
+            System.out.println("Auszahlen gedruckt");
         }
 
         if (e.getSource() == beendenButton) {
@@ -238,10 +238,10 @@ public class MyFrame extends JFrame implements ActionListener{
         String eingabe = eingabeBalanceTxt.getText();
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == numberButtons[i]) {
-             if (eingabe.contains(".")) {
-                if (eingabe.substring(eingabe.indexOf(".")).length() < 3) {
-                    eingabeBalanceTxt.setText(eingabe + i);
-                    }
+                if (eingabe.contains(".")) {
+                    if (eingabe.substring(eingabe.indexOf(".")).length() < 3) {
+                        eingabeBalanceTxt.setText(eingabe + i);
+                    } //nichts tun, wenn schon 2 nachkommastellen da sind
                 } else {
                     eingabeBalanceTxt.setText(eingabe + i);
                 } 
