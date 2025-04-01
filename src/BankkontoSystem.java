@@ -1,55 +1,6 @@
-import java.util.Scanner;;
-
 public class BankkontoSystem {
-    Scanner scanner = new Scanner(System.in);
-    int zahl;
-    double betrag;
-
-    public BankkontoSystem() {
-        Konto konto = new Konto("999999", "Silas Luedtke", 100.0);
-        while (true) { 
-            System.out.println("Wähle eine Option");
-            System.out.println("[1] Auszahlen, [2] Einzahlen, [3] Kontostand Anzeigen, [4] Beenden ");
-            System.out.println(" ");
-            zahl = scanner.nextInt();
-            
-            switch (zahl) {
-                case 1:
-                    System.out.println("Kontostand: " + konto.getKontostand());
-                    System.out.print("Gib den Betrag ein, den du auszahlen möchtest: ");
-                    betrag = scanner.nextDouble();
-                    konto.auszahlen(betrag);
-                    break;
-                case 2:
-                    System.out.print("Gib den Betrag ein, den du einzahlen willst: ");
-                    betrag = scanner.nextDouble();
-                    konto.einzahlen(betrag);
-                    break;
-                case 3:
-                    System.out.print("Kontostand: " + konto.getKontostand());
-                    break;
-                case 4:
-                    break;
-                default:
-                    System.out.println("Error! Bitte verwenden 1, 2, 3 oder 4 als Eingabe.");
-            }
-            scanner.close();
-            break;
-        }
-    }
-
-    public class Konto {
-        private String kontonummer;
-        private String kontoinhaber;
-        private double kontostand = 100.0;
-    
-        //konstruktor
-        public Konto(String kontonummer, String kontoinhaber, double startKontostand) {
-            this.kontonummer = kontonummer;
-            this.kontoinhaber = kontoinhaber;
-            this.kontostand = startKontostand;
-        }
-    
+        private double kontostand = 100.00;
+  
         public void einzahlen(double betrag) {
             if (betrag > 0) {
                 kontostand += betrag;
@@ -71,7 +22,6 @@ public class BankkontoSystem {
         public double getKontostand() {
             return kontostand;
         }
-    }
 }
 
 

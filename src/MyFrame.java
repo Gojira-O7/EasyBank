@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 
 
 public class MyFrame extends JFrame implements ActionListener{
+    private BankkontoSystem bankSystem;
+    int auswahl = 0;
+
     JPanel screenPanelIn; //inner panel
     JPanel screenPanelOut; //outer panel
     JPanel screenBorderedPanel;
@@ -16,7 +19,8 @@ public class MyFrame extends JFrame implements ActionListener{
     //JTextField pinFieldTxt;
     JTextField curBalanceTxt;
     JTextField eingabeBalanceTxt;
-    
+
+    JLabel updateBalanceLabel;
 
     JButton einzahlenButton;
     JButton auszahlenButton;
@@ -27,6 +31,8 @@ public class MyFrame extends JFrame implements ActionListener{
 
     boolean dotButtonUsed = false; //to check if dot button is used
     MyFrame() {
+        bankSystem = new BankkontoSystem();
+
         //PIN layout
         // JLabel label1 = new JLabel();
         // label1.setOpaque(true);
@@ -44,14 +50,15 @@ public class MyFrame extends JFrame implements ActionListener{
         //text field layout
         curBalanceTxt = new JTextField();
         curBalanceTxt.setBounds(370, 60, 150, 35);
-        curBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
+        curBalanceTxt.setFont(new Font("Consolas", Font.BOLD, 30));
         curBalanceTxt.setEditable(false);
         curBalanceTxt.setFocusable(false);
+        curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
         
 
         eingabeBalanceTxt = new JTextField();
         eingabeBalanceTxt.setBounds(370, 110, 150, 35);
-        eingabeBalanceTxt.setFont(new Font("Arial", Font.BOLD, 28));
+        eingabeBalanceTxt.setFont(new Font("Consolas", Font.BOLD, 30));
         eingabeBalanceTxt.setEditable(false);
         eingabeBalanceTxt.setFocusable(false);
 
@@ -148,16 +155,27 @@ public class MyFrame extends JFrame implements ActionListener{
         screenPanelIn = new JPanel();
         screenPanelIn.setBackground(new Color(119, 124, 158));
         screenPanelIn.setBounds(40, 33, 500, 310);
+
         JLabel curBalanceLabel = new JLabel("Kontostand:");
         curBalanceLabel.setBounds(20, 29, 400, 30);
         curBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        curBalanceLabel.setForeground(Color.BLACK);
 
         JLabel withdrwBalanceLabel = new JLabel("Eingabe:");
         withdrwBalanceLabel.setBounds(20, 81, 400, 30); 
-        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25)); 
+        withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        withdrwBalanceLabel.setForeground(Color.BLACK);
+
+        updateBalanceLabel = new JLabel();
+        updateBalanceLabel.setText("Wählen Sie eine Option");
+        updateBalanceLabel.setBounds(120, 181, 400, 30); 
+        updateBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        updateBalanceLabel.setForeground(Color.BLACK);
+
         screenPanelIn.setLayout(null); 
         screenPanelIn.add(curBalanceLabel);
         screenPanelIn.add(withdrwBalanceLabel);
+        screenPanelIn.add(updateBalanceLabel);
 
         screenPanelOut = new JPanel();
         screenPanelOut.setBackground(new Color(238, 238, 238));
@@ -223,19 +241,8 @@ public class MyFrame extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == einzahlenButton) {
-            System.out.println("Einzahlen gedruckt");
-        }
-
-        if (e.getSource() == auszahlenButton) {
-            System.out.println("Auszahlen gedruckt");
-        }
-
-        if (e.getSource() == beendenButton) {
-            System.exit(0);
-        }
-
         String eingabe = eingabeBalanceTxt.getText();
+
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == numberButtons[i]) {
                 if (eingabe.contains(".")) {
@@ -248,8 +255,51 @@ public class MyFrame extends JFrame implements ActionListener{
             }
         }
 
+        if (e.getSource() == einzahlenButton) {
+            if (auswahl == 0) {
+                auswahl = 1;
+                System.out.println("Einzahlen gedruckt " + auswahl);
+            }
+        }
+
+        if (e.getSource() == auszahlenButton) {
+            if (auswahl == 0) {
+                auswahl = 2;
+                System.out.println("Einzahlen gedruckt " + auswahl);
+                System.out.println(auswahl);
+            }
+        }
+
+        if (e.getSource() == beendenButton) {
+            System.exit(0);
+        }
+
+        if (e.getSource() == enterButton) {
+            double betrag = Double.parseDouble(eingabe);
+            switch (auswahl) {
+                case 1:
+                    bankSystem.einzahlen(betrag);
+                    curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
+                    eingabeBalanceTxt.setText("");
+                    updateBalanceLabel.setText("Einzahlen Updated");
+                    break;  
+                case 2:
+                    bankSystem.auszahlen(betrag);
+                    curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
+                    eingabeBalanceTxt.setText("");
+                    updateBalanceLabel.setText("Auszahlen Updated");
+                    break;
+                default:
+                    System.out.println("Error!");
+                    break;
+            }
+            auswahl = 0;
+        }
+
         if (e.getSource() == cancelButton) {
+            auswahl = 0;
             eingabeBalanceTxt.setText("");
+            updateBalanceLabel.setText("Wählen Sie eine Option");
         }
 
         if (e.getSource() == clearButton) {
@@ -259,14 +309,14 @@ public class MyFrame extends JFrame implements ActionListener{
 
         if (e.getSource() == dotButton) {
             if (dotButtonUsed == false) {
-                eingabeBalanceTxt.setText(eingabeBalanceTxt.getText().concat("."));
+                eingabeBalanceTxt.setText(eingabe.concat("."));
                 dotButtonUsed = true;
             }
         }
 
         if (e.getSource() == OOButton) {
             if (dotButtonUsed == false) {
-                eingabeBalanceTxt.setText(eingabeBalanceTxt.getText().concat("00"));
+                eingabeBalanceTxt.setText(eingabe.concat("00"));
             } 
         }
     }
