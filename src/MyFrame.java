@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 
 
@@ -61,6 +62,8 @@ public class MyFrame extends JFrame implements ActionListener{
         eingabeBalanceTxt.setFont(new Font("Consolas", Font.BOLD, 30));
         eingabeBalanceTxt.setEditable(false);
         eingabeBalanceTxt.setFocusable(false);
+
+        
 
 
         //buttons layout
@@ -166,9 +169,8 @@ public class MyFrame extends JFrame implements ActionListener{
         withdrwBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
         withdrwBalanceLabel.setForeground(Color.BLACK);
 
-        updateBalanceLabel = new JLabel();
-        updateBalanceLabel.setText("Wählen Sie eine Option");
-        updateBalanceLabel.setBounds(120, 181, 400, 30); 
+        updateBalanceLabel = new JLabel("Wählen Sie eine Option", SwingConstants.CENTER);
+        updateBalanceLabel.setBounds(55, 181, 400, 30);
         updateBalanceLabel.setFont(new Font("Arial", Font.BOLD, 25));
         updateBalanceLabel.setForeground(Color.BLACK);
 
@@ -258,15 +260,14 @@ public class MyFrame extends JFrame implements ActionListener{
         if (e.getSource() == einzahlenButton) {
             if (auswahl == 0) {
                 auswahl = 1;
-                System.out.println("Einzahlen gedruckt " + auswahl);
+                updateBalanceLabel.setText("Einzahlung ausgewählt");
             }
         }
 
         if (e.getSource() == auszahlenButton) {
             if (auswahl == 0) {
                 auswahl = 2;
-                System.out.println("Einzahlen gedruckt " + auswahl);
-                System.out.println(auswahl);
+                updateBalanceLabel.setText("Auszahlung ausgewählt");
             }
         }
 
@@ -276,23 +277,49 @@ public class MyFrame extends JFrame implements ActionListener{
 
         if (e.getSource() == enterButton) {
             double betrag = Double.parseDouble(eingabe);
+
             switch (auswahl) {
                 case 1:
-                    bankSystem.einzahlen(betrag);
-                    curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
-                    eingabeBalanceTxt.setText("");
-                    updateBalanceLabel.setText("Einzahlen Updated");
+                    updateBalanceLabel.setText("Bearbeiten...");
+                    Timer einTimer = new Timer(3000, t -> {
+                        bankSystem.einzahlen(betrag);
+                        curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
+                        eingabeBalanceTxt.setText("");
+                        updateBalanceLabel.setText("Einzahlung Erfolgreich!");
+                    });
+                    einTimer.setRepeats(false);
+                    einTimer.start(); 
                     break;  
                 case 2:
-                    bankSystem.auszahlen(betrag);
-                    curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
-                    eingabeBalanceTxt.setText("");
-                    updateBalanceLabel.setText("Auszahlen Updated");
+                    if (betrag > 0 && betrag <= bankSystem.getKontostand()) {
+                        updateBalanceLabel.setText("Bearbeiten...");
+                        Timer ausTimer = new Timer(3000, t -> {
+                            bankSystem.auszahlen(betrag);
+                            curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
+                            eingabeBalanceTxt.setText("");
+                            updateBalanceLabel.setText("Auszahlung Erfolgreich!"); 
+                        });
+                        ausTimer.setRepeats(false);
+                        ausTimer.start();
+                    } else {
+                        updateBalanceLabel.setText("Bearbeiten...");
+                        Timer ausTimer = new Timer(3000, t -> {
+                            eingabeBalanceTxt.setText("");
+                            updateBalanceLabel.setText("Ungültiger Betrag!");
+                        });
+                        ausTimer.setRepeats(false);
+                        ausTimer.start();
+                    }
                     break;
                 default:
-                    System.out.println("Error!");
+                    System.out.println("Error! Wählen Sie eine Option!");
                     break;
             }
+            Timer optTimer = new Timer(6000, t -> {
+                updateBalanceLabel.setText("Wählen Sie eine Option");
+            });
+            optTimer.setRepeats(false);
+            optTimer.start();
             auswahl = 0;
         }
 
