@@ -1,8 +1,7 @@
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 
 public class MyFrame extends JFrame implements ActionListener{
@@ -17,7 +16,6 @@ public class MyFrame extends JFrame implements ActionListener{
     JPanel calcBorderedPanel;
     JPanel backPanel; //background panel
 
-    //JTextField pinFieldTxt;
     JTextField curBalanceTxt;
     JTextField eingabeBalanceTxt;
 
@@ -34,20 +32,6 @@ public class MyFrame extends JFrame implements ActionListener{
     MyFrame() {
         bankSystem = new BankkontoSystem();
 
-        //PIN layout
-        // JLabel label1 = new JLabel();
-        // label1.setOpaque(true);
-        // label1.setBackground(Color.RED);
-        // label1.setBounds(40, 33, 500, 310);
-        // JLayeredPane layeredPane = new JLayeredPane();
-        // layeredPane.setBounds(0, 0, 560, 410);
-        // layeredPane.add(label1, JLayeredPane.DEFAULT_LAYER);
-        
-        // pinFieldTxt = new JTextField();
-        // pinFieldTxt.setBounds(30, 300, 150, 35);
-        // pinFieldTxt.setFont(new Font("Arial", Font.BOLD, 28));
-
-
         //text field layout
         curBalanceTxt = new JTextField();
         curBalanceTxt.setBounds(370, 60, 150, 35);
@@ -56,20 +40,17 @@ public class MyFrame extends JFrame implements ActionListener{
         curBalanceTxt.setFocusable(false);
         curBalanceTxt.setText(String.valueOf(bankSystem.getKontostand()));
         
-
         eingabeBalanceTxt = new JTextField();
         eingabeBalanceTxt.setBounds(370, 110, 150, 35);
         eingabeBalanceTxt.setFont(new Font("Consolas", Font.BOLD, 30));
         eingabeBalanceTxt.setEditable(false);
         eingabeBalanceTxt.setFocusable(false);
 
-        
-
 
         //buttons layout
         einzahlenButton = new JButton("Einzahlen");
         einzahlenButton.setBounds(54, 270, 150, 40);
-        einzahlenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        einzahlenButton.setFont(new Font("Arial", Font.BOLD, 23));
         einzahlenButton.addActionListener(this);
         einzahlenButton.setFocusable(false);
         einzahlenButton.setBackground(new Color (189, 194, 228));
@@ -77,7 +58,7 @@ public class MyFrame extends JFrame implements ActionListener{
 
         auszahlenButton = new JButton("Auszahlen");
         auszahlenButton.setBounds(214, 270, 150, 40);
-        auszahlenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        auszahlenButton.setFont(new Font("Arial", Font.BOLD, 23));
         auszahlenButton.addActionListener(this);
         auszahlenButton.setFocusable(false);
         auszahlenButton.setBackground(new Color (189, 194, 228));
@@ -85,11 +66,12 @@ public class MyFrame extends JFrame implements ActionListener{
 
         beendenButton = new JButton("Beenden");
         beendenButton.setBounds(374, 270, 150, 40);
-        beendenButton.setFont(new Font("Arial", Font.BOLD, 25));
+        beendenButton.setFont(new Font("Arial", Font.BOLD, 23));
         beendenButton.addActionListener(this);
         beendenButton.setFocusable(false);
         beendenButton.setBackground(new Color (189, 194, 228));
         beendenButton.setBorder(BorderFactory.createEtchedBorder());
+
 
         //calculator buttons layout
         enterButton = new JButton("Enter");
@@ -195,23 +177,20 @@ public class MyFrame extends JFrame implements ActionListener{
         
         calcPanelOut = new JPanel();
         calcPanelOut.setBackground(new Color(238, 238, 238));
-        calcPanelOut.setBounds(screenPanelOut.getX(), screenPanelOut.getY() + screenPanelOut.getHeight() + 14, 556, 355);
+        calcPanelOut.setBounds(screenPanelOut.getX(), screenPanelOut.getY() + screenPanelOut.getHeight() + 14, 556, 335);
         
         calcBorderedPanel = new JPanel();
         calcBorderedPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        calcBorderedPanel.setBounds(screenBorderedPanel.getX(), screenBorderedPanel.getY() + screenBorderedPanel.getHeight() + 10, 560, 360);
+        calcBorderedPanel.setBounds(screenBorderedPanel.getX(), screenBorderedPanel.getY() + screenBorderedPanel.getHeight() + 10, 560, 348);
 
 
         this.setTitle("Bankkonto System");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(598, 780);
+        this.setSize(586, 760);
         this.setResizable(false);
         this.setLocationRelativeTo(null); 
         this.setAlwaysOnTop(true);
         this.setLayout(null);
-
-        // this.add(layeredPane);
-        // this.add(pinFieldTxt);
 
         //caclulator panel
         this.add(calc);
