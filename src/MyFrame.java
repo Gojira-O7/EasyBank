@@ -251,7 +251,7 @@ public class MyFrame extends JFrame implements ActionListener{
         }
 
         if (e.getSource() == beendenButton) {
-            System.exit(0);
+            dispose();
         }
 
         if (e.getSource() == enterButton) {
@@ -304,6 +304,7 @@ public class MyFrame extends JFrame implements ActionListener{
 
         if (e.getSource() == cancelButton) {
             auswahl = 0;
+            dotButtonUsed = false;
             eingabeBalanceTxt.setText("");
             updateBalanceLabel.setText("Wählen Sie eine Option");
         }
