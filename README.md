@@ -1,2 +1,2 @@
 # EasyBank
-Ein einfaches Bankkonto-System in Java
+Ein einfaches Bankautomaten System in Java
